@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="dataSource.properties">
+        <property name="username" value="root"/>
+    </properties>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mapper/mapper.xml"/>
+        <!--
+
+        <mapper class="com.dao.StudentDao"/>
+
+            class:dao接口的全限定类名
+            映射文件在dao接口所在包下，映射文件名称必须与dao接口名称一样
+        -->
+
+        <!--
+
+        <package name="com.dao"/>
+
+           name:dao接口所在的包名
+           映射文件在dao接口所在包下，映射文件名称必须与dao接口名称一样
+           作用：把该包之下的所有映射文件注册进来
+       -->
+    </mappers>
+</configuration>
