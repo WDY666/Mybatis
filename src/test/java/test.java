@@ -150,6 +150,9 @@ public class test {
         System.out.println(student);
     }
 
+    /**
+     * 模糊查询
+     */
     @Test
     public void findByLikeName(){
         List<Student> lists = studentDao.findByLikeName("王");

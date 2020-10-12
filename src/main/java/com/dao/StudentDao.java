@@ -71,6 +71,11 @@ public interface StudentDao {
      */
     public Student mulitFind(Integer id);
 
+    /**
+     * 模糊查询
+     * @param name
+     * @return
+     */
     public List<Student> findByLikeName(String name);
 
 }
