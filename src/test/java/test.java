@@ -1,4 +1,5 @@
 import com.dao.StudentDao;
+import com.pojo.StuClass;
 import com.pojo.Student;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -143,6 +144,7 @@ public class test {
 
     /**
      * 多表联合查询
+     * 一对多
      */
     @Test
     public void mulitFind(){
@@ -158,6 +160,17 @@ public class test {
         List<Student> lists = studentDao.findByLikeName("王");
         lists.forEach(System.out::println);
     }
+
+    /**
+     *多表联合查询
+     * 多对一
+     */
+    @Test
+    public void manyToOne(){
+        List<StuClass> stuClasses = studentDao.manyToOne(1);
+        System.out.println(stuClasses);
+    }
+
     @After
     public void closeSession(){
         sqlSession.close();

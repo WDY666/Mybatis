@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @Author WDY
  * @Date 2020-10-06 15:40
@@ -15,4 +17,5 @@ import lombok.NoArgsConstructor;
 public class StuClass {
     private Integer cid;
     private String cname;
+    private Student student;
 }

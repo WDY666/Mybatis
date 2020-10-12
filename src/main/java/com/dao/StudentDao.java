@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.pojo.StuClass;
 import com.pojo.Student;
 
 import java.util.List;
@@ -77,5 +78,14 @@ public interface StudentDao {
      * @return
      */
     public List<Student> findByLikeName(String name);
+
+    /**
+     * 多对一
+     * @param cid
+     * @return
+     */
+    public List<StuClass> manyToOne(Integer cid);
+
+
 
 }

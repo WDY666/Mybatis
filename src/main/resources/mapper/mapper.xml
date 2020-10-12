@@ -86,7 +86,7 @@
     </select>
 
     <select id="mulitFind" resultMap="mulitFindMap">
-        select * from stu,clas where clas.c_id = 1 and stu.id = #{#id}
+        select * from stu where id = #{#id}
     </select>
     <select id="findByLikeName" resultType="com.pojo.Student">
         select * from stu where name like '%' #{name} '%'
@@ -108,12 +108,36 @@
         where id=#{id}
     </update>
 
+    <select id="manyToOne" resultMap="manyToOne">
+        select * from stu,clas where stu.id = #{id} and clas.c_id=1
+    </select>
+
+    <resultMap id="manyToOne" type="com.pojo.StuClass">
+        <result column="c_id" property="cid"/>
+        <result column="c_name" property="cname"/>
+        <association property="student" javaType="com.pojo.Student">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+            <result property="score" column="score"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="StuClas" type="com.pojo.StuClass">
+        <result column="c_id" property="cid"/>
+        <result column="c_name" property="cname"/>
+    </resultMap>
+
+    <select id="findClass" resultMap="StuClas">
+        select * from clas where c_id = #{cid}
+    </select>
+
     <resultMap id="mulitFindMap" type="com.pojo.Student">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="age" column="age"/>
         <result property="score" column="score"/>
-        <collection property="subject" ofType="com.pojo.StuClass">
+        <collection property="subject" ofType="com.pojo.StuClass" select="findClass" column="id">
             <result property="cid" column="c_id"/>
             <result property="cname" column="c_name"/>
         </collection>
