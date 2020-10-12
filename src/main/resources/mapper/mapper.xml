@@ -108,19 +108,22 @@
         where id=#{id}
     </update>
 
-    <select id="manyToOne" resultMap="manyToOne">
-        select * from stu,clas where stu.id = #{id} and clas.c_id=1
+    <select id="manyToMany" resultMap="many">
+        select * from stu,clas where stu.cid = clas.c_id
+        <if test="id!=null">
+            and stu.id = #{id}
+        </if>
     </select>
 
-    <resultMap id="manyToOne" type="com.pojo.StuClass">
-        <result column="c_id" property="cid"/>
-        <result column="c_name" property="cname"/>
-        <association property="student" javaType="com.pojo.Student">
-            <id property="id" column="id"/>
-            <result property="name" column="name"/>
-            <result property="age" column="age"/>
-            <result property="score" column="score"/>
-        </association>
+    <resultMap id="many" type="com.pojo.Student">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="score" column="score"/>
+        <collection property="subject" ofType="com.pojo.StuClass">
+            <result property="cid" column="c_id"/>
+            <result property="cname" column="c_name"/>
+        </collection>
     </resultMap>
 
     <resultMap id="StuClas" type="com.pojo.StuClass">

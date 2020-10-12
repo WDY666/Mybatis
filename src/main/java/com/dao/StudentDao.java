@@ -80,12 +80,11 @@ public interface StudentDao {
     public List<Student> findByLikeName(String name);
 
     /**
-     * 多对一
-     * @param cid
+     * 多对多
+     * @param sid
      * @return
      */
-    public List<StuClass> manyToOne(Integer cid);
-
+    public List<Student> manyToMany(Integer sid);
 
 
 }

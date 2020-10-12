@@ -17,5 +17,5 @@ import java.util.List;
 public class StuClass {
     private Integer cid;
     private String cname;
-    private Student student;
+    private List<Student> student;
 }

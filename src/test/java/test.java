@@ -162,14 +162,15 @@ public class test {
     }
 
     /**
-     *多表联合查询
-     * 多对一
+     * 多表联合查询
+     * 多对多
      */
     @Test
-    public void manyToOne(){
-        List<StuClass> stuClasses = studentDao.manyToOne(1);
-        System.out.println(stuClasses);
+    public void manyToMany(){
+        List<Student> students = studentDao.manyToMany(1);
+        students.forEach(System.out::println);
     }
+
 
     @After
     public void closeSession(){
