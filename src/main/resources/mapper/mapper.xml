@@ -88,6 +88,9 @@
     <select id="mulitFind" resultMap="mulitFindMap">
         select * from stu,clas where clas.c_id = 1 and stu.id = #{#id}
     </select>
+    <select id="findByLikeName" resultType="com.pojo.Student">
+        select * from stu where name like '%' #{name} '%'
+    </select>
 
     <update id="updateByConditions">
         update stu

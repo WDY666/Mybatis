@@ -149,6 +149,12 @@ public class test {
         Student student = studentDao.mulitFind(1);
         System.out.println(student);
     }
+
+    @Test
+    public void findByLikeName(){
+        List<Student> lists = studentDao.findByLikeName("王");
+        lists.forEach(System.out::println);
+    }
     @After
     public void closeSession(){
         sqlSession.close();

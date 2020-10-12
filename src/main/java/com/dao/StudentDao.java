@@ -71,4 +71,6 @@ public interface StudentDao {
      */
     public Student mulitFind(Integer id);
 
+    public List<Student> findByLikeName(String name);
+
 }
