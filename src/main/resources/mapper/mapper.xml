@@ -151,19 +151,24 @@
         <id column="id" property="id"/>
         <result column="cityname" property="cityName"/>
         <result column="pid" property="pid"/>
-        <association property="City" column="pid" javaType="com.pojo.City" select="finfCategoryChildren">
+        <collection property="children" column="id" ofType="com.pojo.City" select="findCategoryChildren">
             <id column="id" property="id"/>
             <result column="cityname" property="cityName"/>
             <result column="pid" property="pid"/>
-        </association>
+        </collection>
     </resultMap>
 
     <select id="findCategoryLevelFirst" resultMap="category">
         select * from city where id = #{id}
     </select>
-    
-    <select id="finfCategoryChildren" resultMap="category">
-        select * from city where pid = {pid}
+
+    <select id="findCategoryChildren" resultMap="category">
+        select * from city where pid = #{id}
     </select>
+
+    <select id="findAllCategory" resultType="com.pojo.CityCategory">
+        select * from city
+    </select>
+
 
 </mapper>

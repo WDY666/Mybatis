@@ -4,19 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 /**
- * company: www.abc.com
- * Author: Administrator
- * Create Data: 2020/10/19 0019
+ * @Author WDY
+ * @Date 2020-10-19 22:26
+ * @Description TODO
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class City {
+public class CityCategory {
     private Integer id;
     private Integer pid;
     private String cityName;
-    private Set<City> children;
+    private List<CityCategory> children;
+
 }

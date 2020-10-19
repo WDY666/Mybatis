@@ -1,4 +1,6 @@
 import com.dao.StudentDao;
+import com.pojo.City;
+import com.pojo.CityCategory;
 import com.pojo.StuClass;
 import com.pojo.Student;
 import org.apache.ibatis.io.Resources;
@@ -11,6 +13,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author WDY
@@ -20,6 +23,8 @@ import java.util.*;
 public class test {
     private SqlSession sqlSession;
     private StudentDao studentDao;
+    private long x;
+
     @Before
     public void loadConfig() throws IOException {
         //1.读取配置文件
@@ -150,7 +155,8 @@ public class test {
     @Test
     public void mulitFind(){
         Student student = studentDao.mulitFind(1);
-        System.out.println(student);
+        Integer age = student.getAge();
+        //System.out.println(student.toString());
     }
 
     /**
@@ -170,6 +176,45 @@ public class test {
     public void manyToMany(){
         List<Student> students = studentDao.manyToMany(null);
         students.forEach(System.out::println);
+    }
+
+    /**
+     *查询各省级联关系
+     */
+    @Test
+    public void findCategoryLevelFirst(){
+        long timeMillis = System.currentTimeMillis();
+        City categoryLevelFirst = studentDao.findCategoryLevelFirst(11);
+        System.out.println(System.currentTimeMillis()-timeMillis);
+        System.out.println(categoryLevelFirst);
+    }
+
+    /**
+     *查询各省级联关系
+     */
+    @Test
+    public void findCategoryLevelFirstByStream(){
+        long timeMillis = System.currentTimeMillis();
+        List<CityCategory> allCategory = studentDao.findAllCategory(null);
+        List<CityCategory> categoryLevel1 = allCategory.stream().filter(categoryEntity ->
+           categoryEntity.getId() == 11
+        ).map(menu->{
+            menu.setChildren(getChildren(menu,allCategory));
+            return menu;
+        }).collect(Collectors.toList());
+        System.out.println(System.currentTimeMillis()-timeMillis);
+        categoryLevel1.forEach(System.out::println);
+    }
+
+    private List<CityCategory> getChildren(CityCategory root,List<CityCategory> all){
+        List<CityCategory> children = all.stream().filter(categoryEntity ->
+                root.getId() ==  categoryEntity.getPid()
+        ).map(categoryEntity -> {
+            //查找子菜单
+            categoryEntity.setChildren(getChildren(categoryEntity,all));
+            return categoryEntity;
+        }).collect(Collectors.toList());
+        return children;
     }
 
 

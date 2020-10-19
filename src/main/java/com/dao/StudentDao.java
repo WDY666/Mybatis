@@ -1,5 +1,7 @@
 package com.dao;
 
+import com.pojo.City;
+import com.pojo.CityCategory;
 import com.pojo.StuClass;
 import com.pojo.Student;
 
@@ -86,5 +88,25 @@ public interface StudentDao {
      */
     public List<Student> manyToMany(Integer sid);
 
+    /**
+     * 查询课程
+     * @param id
+     * @return
+     */
+    public StuClass findClass(Integer id);
+
+    /**
+     * 查询各省级联关系
+     * @param id
+     * @return
+     */
+    public City findCategoryLevelFirst(Integer id);
+
+    /**
+     * 查询各省级联关系Stream处理
+     * @param id
+     * @return
+     */
+    public List<CityCategory> findAllCategory(Integer id);
 
 }
