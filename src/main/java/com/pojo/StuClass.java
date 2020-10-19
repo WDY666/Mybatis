@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StuClass {
-    private Integer cid;
     private String cname;
+    private Integer cid;
     private List<Student> student;
 }

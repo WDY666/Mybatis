@@ -65,6 +65,7 @@ public class test {
             Student student = new Student();
             student.setAge(random.nextInt(100));
             student.setName(firstNames[i1]+lastNames[i2]);
+            student.setCid(random.nextInt(3)+1);
             student.setScore(Double.valueOf(String.format("%.2f",random.nextDouble()*100)));
             list.add(student);
 
@@ -167,7 +168,7 @@ public class test {
      */
     @Test
     public void manyToMany(){
-        List<Student> students = studentDao.manyToMany(1);
+        List<Student> students = studentDao.manyToMany(null);
         students.forEach(System.out::println);
     }
 

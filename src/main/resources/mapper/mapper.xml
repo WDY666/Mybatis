@@ -41,9 +41,9 @@
     </insert>
 
     <insert id="batchAddStudent" parameterType="com.pojo.Student" useGeneratedKeys="true" keyProperty="id">
-        insert into stu (id,name,age,score) values
+        insert into stu (id,name,age,score,cid) values
         <foreach collection="list" separator="," item="student">
-            (#{student.id},#{student.name},#{student.age},#{student.score})
+            (#{student.id},#{student.name},#{student.age},#{student.score},#{student.cid})
         </foreach>
     </insert>
 
@@ -109,7 +109,7 @@
     </update>
 
     <select id="manyToMany" resultMap="many">
-        select * from stu,clas where stu.cid = clas.c_id
+        select * from stu,clas where stu.cid = clas.cid
         <if test="id!=null">
             and stu.id = #{id}
         </if>
@@ -121,18 +121,18 @@
         <result property="age" column="age"/>
         <result property="score" column="score"/>
         <collection property="subject" ofType="com.pojo.StuClass">
-            <result property="cid" column="c_id"/>
-            <result property="cname" column="c_name"/>
+            <id property="cid" column="cid"/>
+            <result property="cname" column="cname"/>
         </collection>
     </resultMap>
 
     <resultMap id="StuClas" type="com.pojo.StuClass">
-        <result column="c_id" property="cid"/>
-        <result column="c_name" property="cname"/>
+        <id column="cid" property="cid"/>
+        <result column="cname" property="cname"/>
     </resultMap>
 
     <select id="findClass" resultMap="StuClas">
-        select * from clas where c_id = #{cid}
+        select * from clas where cid = #{cid}
     </select>
 
     <resultMap id="mulitFindMap" type="com.pojo.Student">
@@ -141,10 +141,29 @@
         <result property="age" column="age"/>
         <result property="score" column="score"/>
         <collection property="subject" ofType="com.pojo.StuClass" select="findClass" column="id">
-            <result property="cid" column="c_id"/>
-            <result property="cname" column="c_name"/>
+            <result property="cid" column="cid"/>
+            <result property="cname" column="cname"/>
         </collection>
     </resultMap>
 
+
+    <resultMap id="category" type="com.pojo.City">
+        <id column="id" property="id"/>
+        <result column="cityname" property="cityName"/>
+        <result column="pid" property="pid"/>
+        <association property="City" column="pid" javaType="com.pojo.City" select="finfCategoryChildren">
+            <id column="id" property="id"/>
+            <result column="cityname" property="cityName"/>
+            <result column="pid" property="pid"/>
+        </association>
+    </resultMap>
+
+    <select id="findCategoryLevelFirst" resultMap="category">
+        select * from city where id = #{id}
+    </select>
+    
+    <select id="finfCategoryChildren" resultMap="category">
+        select * from city where pid = {pid}
+    </select>
 
 </mapper>

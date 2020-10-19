@@ -17,6 +17,7 @@ public class Student {
     private String name;
     private Integer age;
     private Double score;
+    private Integer cid;
     private List<StuClass> subject;
 
 }
