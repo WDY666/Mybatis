@@ -159,16 +159,32 @@
     </resultMap>
 
     <select id="findCategoryLevelFirst" resultMap="category">
-        select * from city where id = #{id}
+        select id,pid,cityname from city where id = #{id}
     </select>
 
     <select id="findCategoryChildren" resultMap="category">
-        select * from city where pid = #{id}
+        select id,pid,cityname from city where pid = #{id}
     </select>
 
     <select id="findAllCategory" resultType="com.pojo.CityCategory">
-        select * from city
+        select id,pid,cityname from city
     </select>
+
+
+    <select id="findCategoryParent" resultMap="findCategoryParentType">
+        select id,pid,cityname from city where id = #{id}
+    </select>
+
+    <resultMap id="findCategoryParentType" type="com.pojo.CategoryParent">
+        <id property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="cityName" column="cityname"/>
+        <association property="parent" javaType="com.pojo.CategoryParent" column="pid" select="findCategoryParent">
+            <id property="id" column="id"/>
+            <result property="pid" column="pid"/>
+            <result property="cityName" column="cityname"/>
+        </association>
+    </resultMap>
 
 
 </mapper>

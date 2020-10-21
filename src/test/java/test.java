@@ -1,8 +1,5 @@
 import com.dao.StudentDao;
-import com.pojo.City;
-import com.pojo.CityCategory;
-import com.pojo.StuClass;
-import com.pojo.Student;
+import com.pojo.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -179,7 +176,7 @@ public class test {
     }
 
     /**
-     *查询各省级联关系
+     *查询各省级联关系(子类)
      */
     @Test
     public void findCategoryLevelFirst(){
@@ -196,11 +193,12 @@ public class test {
     public void findCategoryLevelFirstByStream(){
         long timeMillis = System.currentTimeMillis();
         List<CityCategory> allCategory = studentDao.findAllCategory(null);
+        //一级菜单
         List<CityCategory> categoryLevel1 = allCategory.stream().filter(categoryEntity ->
-           categoryEntity.getId() == 11
-        ).map(menu->{
+           categoryEntity.getId().equals(11)
+        ).peek(menu->{
+            //设置子菜单
             menu.setChildren(getChildren(menu,allCategory));
-            return menu;
         }).collect(Collectors.toList());
         System.out.println(System.currentTimeMillis()-timeMillis);
         categoryLevel1.forEach(System.out::println);
@@ -208,13 +206,21 @@ public class test {
 
     private List<CityCategory> getChildren(CityCategory root,List<CityCategory> all){
         List<CityCategory> children = all.stream().filter(categoryEntity ->
-                root.getId() ==  categoryEntity.getPid()
-        ).map(categoryEntity -> {
+                root.getId().equals(categoryEntity.getPid())
+        ).peek(categoryEntity -> {
             //查找子菜单
             categoryEntity.setChildren(getChildren(categoryEntity,all));
-            return categoryEntity;
         }).collect(Collectors.toList());
         return children;
+    }
+
+    /**
+     * 级联查询（父类）
+     */
+    @Test
+    public void findCategoryParent(){
+        CategoryParent categoryParent = studentDao.findCategoryParent(150);
+        System.out.println(categoryParent);
     }
 
 

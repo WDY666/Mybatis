@@ -1,9 +1,6 @@
 package com.dao;
 
-import com.pojo.City;
-import com.pojo.CityCategory;
-import com.pojo.StuClass;
-import com.pojo.Student;
+import com.pojo.*;
 
 import java.util.List;
 
@@ -96,7 +93,7 @@ public interface StudentDao {
     public StuClass findClass(Integer id);
 
     /**
-     * 查询各省级联关系
+     * 查询各省级联关系(子类)
      * @param id
      * @return
      */
@@ -108,5 +105,7 @@ public interface StudentDao {
      * @return
      */
     public List<CityCategory> findAllCategory(Integer id);
+
+    public CategoryParent findCategoryParent(Integer id);
 
 }

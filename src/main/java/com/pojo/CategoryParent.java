@@ -4,20 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * @Author WDY
- * @Date 2020-10-19 22:26
+ * @Date 2020-10-20 15:57
  * @Description TODO
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityCategory {
+public class CategoryParent {
     private Integer id;
     private Integer pid;
     private String cityName;
-    private List<CityCategory> children;
-
+    private CategoryParent parent;
 }
